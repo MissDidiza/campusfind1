@@ -1,0 +1,83 @@
+"""
+enums.py — All enumeration types for CampusFind system.
+Directly maps to enumeration classes in CLASS_DIAGRAM.md (Assignment 9).
+"""
+from enum import Enum
+
+
+class UserRole(Enum):
+    STUDENT = "STUDENT"
+    ADMIN = "ADMIN"
+    SUPER_ADMIN = "SUPER_ADMIN"
+
+
+class ReportType(Enum):
+    LOST = "LOST"
+    FOUND = "FOUND"
+
+
+class ReportStatus(Enum):
+    OPEN = "OPEN"
+    MATCHING = "MATCHING"
+    MATCH_FOUND = "MATCH_FOUND"
+    MATCHED = "MATCHED"
+    HANDOVER_PENDING = "HANDOVER_PENDING"
+    RESOLVED = "RESOLVED"
+    ESCALATED = "ESCALATED"
+    UNCLAIMED = "UNCLAIMED"
+    ARCHIVED = "ARCHIVED"
+
+
+class ItemCategory(Enum):
+    ELECTRONICS = "ELECTRONICS"
+    CLOTHING = "CLOTHING"
+    ACCESSORIES = "ACCESSORIES"
+    DOCUMENTS = "DOCUMENTS"
+    KEYS = "KEYS"
+    OTHER = "OTHER"
+
+
+class MatchStatus(Enum):
+    GENERATED = "GENERATED"
+    NOTIFIED = "NOTIFIED"
+    PENDING_REVIEW = "PENDING_REVIEW"
+    CONFIRMED = "CONFIRMED"
+    DISMISSED = "DISMISSED"
+    STALE = "STALE"
+    CLOSED = "CLOSED"
+
+
+class HandoverStatus(Enum):
+    INITIATED = "INITIATED"
+    AWAITING_COLLECTION = "AWAITING_COLLECTION"
+    REMINDER_1_SENT = "REMINDER_1_SENT"
+    REMINDER_2_SENT = "REMINDER_2_SENT"
+    ESCALATED = "ESCALATED"
+    COLLECTED = "COLLECTED"
+    UNCLAIMED = "UNCLAIMED"
+    CLOSED = "CLOSED"
+
+
+class NotificationType(Enum):
+    MATCH_ALERT = "MATCH_ALERT"
+    HANDOVER_SCHEDULED = "HANDOVER_SCHEDULED"
+    REMINDER = "REMINDER"
+    DAILY_DIGEST = "DAILY_DIGEST"
+    PASSWORD_RESET = "PASSWORD_RESET"
+    VERIFICATION = "VERIFICATION"
+
+
+class NotificationStatus(Enum):
+    QUEUED = "QUEUED"
+    SENDING = "SENDING"
+    DELIVERED = "DELIVERED"
+    PARTIALLY_DELIVERED = "PARTIALLY_DELIVERED"
+    FAILED = "FAILED"
+    READ = "READ"
+    EXPIRED = "EXPIRED"
+
+
+class NotificationChannel(Enum):
+    EMAIL = "EMAIL"
+    IN_APP = "IN_APP"
+    BOTH = "BOTH"
