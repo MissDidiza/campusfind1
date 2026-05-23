@@ -1,0 +1,164 @@
+# ci.yml — CampusFind CI/CD Pipeline
+# =====================================
+# Triggers:
+#   - Every push to any branch (runs tests)
+#   - Every pull request to main (runs tests, blocks merge if tests fail)
+#   - Push to main (runs tests + builds and uploads release artifact)
+#
+# Jobs:
+#   1. test     — runs all 120 unit and integration tests
+#   2. artifact — builds a Python wheel and uploads it as a GitHub release artifact
+#                 (only runs when code is merged/pushed to main)
+
+name: CampusFind CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - '**'        # triggers on push to ANY branch
+  pull_request:
+    branches:
+      - main        # triggers on PR targeting main
+
+jobs:
+
+  # ── Job 1: Run All Tests ────────────────────────────────────────
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1 — Check out the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2 — Set up Python 3.11
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # Step 3 — Cache pip dependencies for faster runs
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      # Step 4 — Install all dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov
+
+      # Step 5 — Run all tests with coverage report
+      - name: Run tests with coverage
+        run: |
+          python -m pytest tests/ -v \
+            --tb=short \
+            --junitxml=test-results/results.xml \
+            --cov=. \
+            --cov-report=xml:coverage/coverage.xml \
+            --cov-report=term-missing
+
+      # Step 6 — Upload test results as artifact (visible in Actions tab)
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()    # upload even if tests fail
+        with:
+          name: test-results
+          path: test-results/results.xml
+
+      # Step 7 — Upload coverage report
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-report
+          path: coverage/coverage.xml
+
+  # ── Job 2: Build and Upload Release Artifact ───────────────────
+  # Only runs when code is pushed/merged to main
+  artifact:
+    name: Build Release Artifact
+    runs-on: ubuntu-latest
+    needs: test           # only runs if test job passes
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      # Step 1 — Check out the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2 — Set up Python 3.11
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # Step 3 — Install build tools
+      - name: Install build dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build wheel setuptools
+          pip install -r requirements.txt
+
+      # Step 4 — Create setup.py for packaging
+      - name: Create setup.py
+        run: |
+          cat > setup.py << 'EOF'
+          from setuptools import setup, find_packages
+          setup(
+              name="campusfind",
+              version="1.0.0",
+              description="CampusFind Smart Campus Lost and Found System",
+              packages=find_packages(),
+              python_requires=">=3.11",
+              install_requires=[
+                  "fastapi>=0.111.0",
+                  "uvicorn>=0.29.0",
+                  "pydantic>=2.7.0",
+              ],
+          )
+          EOF
+
+      # Step 5 — Build the Python wheel artifact
+      - name: Build Python wheel
+        run: python -m build --wheel
+
+      # Step 6 — Upload the wheel as a GitHub Actions artifact
+      - name: Upload wheel artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: campusfind-wheel
+          path: dist/*.whl
+          retention-days: 30
+
+      # Step 7 — Create a GitHub Release with the wheel attached
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/heads/main')
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          name: CampusFind Release v1.0.${{ github.run_number }}
+          body: |
+            ## CampusFind Automated Release
+
+            **Commit:** ${{ github.sha }}
+            **Branch:** main
+            **Tests:** All passing ✅
+
+            ### What's included
+            - User registration and authentication API
+            - Lost and found report submission API
+            - AI match record management API
+            - 120 unit and integration tests passing
+
+          files: dist/*.whl
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
