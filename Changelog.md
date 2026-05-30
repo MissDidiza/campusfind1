@@ -114,3 +114,28 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - #23 Create FileSystem repository stubs ✅
 - #24 Create Database repository stubs with SQL schema ✅
 - #25 Write 60+ repository unit tests ✅
+
+## [Assignment 14] — 2026
+ 
+### Added
+- `CONTRIBUTING.md` — Full contributor guide: prerequisites, setup, coding standards, PR workflow
+- `ROADMAP.md` — 30+ planned features across 6 phases, labelled by difficulty
+- `LICENSE` — MIT License
+- `VOTING_RESULTS.md` — Peer review tracking (stars, forks, feedback)
+- `REFLECTION_A14.md` — 700-word reflection on open-source collaboration
+- Updated `README.md` — Getting Started section, contribution table, license badge
+### GitHub Issues to Create and Label
+Label these issues on GitHub after pushing:
+ 
+**good-first-issue (5+):**
+- Add JWT token blacklisting with Redis
+- Add environment variable config with python-dotenv
+- Add pagination to list endpoints
+- Add structured logging with Python logging module
+- Connect real SendGrid email API
+- Add CSV export endpoint
+**feature-request (3+):**
+- Implement PostgreSQL repository layer with SQLAlchemy
+- Build React frontend for students
+- Integrate sentence-transformers AI matching engine
+ 

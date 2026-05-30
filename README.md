@@ -269,3 +269,39 @@ See [PROTECTION.md](./PROTECTION.md) for full details on why branch protection m
 | [.github/workflows/pr_check.yml](./.github/workflows/pr_check.yml) | PR comment with test summary |
 | [PROTECTION.md](./PROTECTION.md) | Branch protection rules explanation |
 | [setup.py](./setup.py) | Python package configuration for wheel build |
+
+Assignment 14 — Open-Source Collaboration
+🚀 Getting Started
+Prerequisites
+
+Python 3.11 or higher
+Git
+
+Installation
+bash# 1. Fork this repository on GitHub, then clone your fork
+git clone https://github.com/YOUR_USERNAME/campusfind1.git
+cd campusfind1
+
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. Run all tests to verify setup
+python -m pytest tests/ -v
+
+# 4. Start the API
+uvicorn api.main:app --reload
+
+# 5. Open Swagger UI in browser
+# http://localhost:8000/docs
+
+🤝 Contributing
+We welcome contributions! Please read CONTRIBUTING.md before starting.
+Features Available for Contribution
+FeatureDifficultyLabelAdd JWT token blacklisting with RedisEasygood-first-issueAdd environment variable config with python-dotenvEasygood-first-issueAdd pagination to list endpointsEasygood-first-issueAdd structured loggingEasygood-first-issueConnect real SendGrid email APIEasygood-first-issueAdd CSV export endpoint for statisticsEasygood-first-issueImplement PostgreSQL repository layerMediumfeature-requestBuild React frontend for studentsHardfeature-requestIntegrate sentence-transformers AI matchingHardfeature-request
+See ROADMAP.md for the full list of planned features.
+
+📄 License
+This project is licensed under the MIT License — see LICENSE for details.
+📊 Peer Review
+See VOTING_RESULTS.md for peer engagement statistics.
+FileDescriptionCONTRIBUTING.mdHow to set up, code standards, and submit PRsROADMAP.mdPlanned features grouped by priority and difficultyLICENSEMIT LicenseVOTING_RESULTS.mdPeer review stars and forks trackingREFLECTION_A14.mdReflection on open-source collaboration
