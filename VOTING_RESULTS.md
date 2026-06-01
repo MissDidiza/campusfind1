@@ -12,8 +12,8 @@
 
 | Metric | Count |
 |---|---|
-| ⭐ GitHub Stars | (update after sharing with class) |
-| 🍴 GitHub Forks | (update after sharing with class) |
+| ⭐ GitHub Stars | 21 |
+| 🍴 GitHub Forks | 19 |
 | 👁️ Repository Views | (update from Insights tab) |
 | 🔀 Pull Requests from peers | (update after receiving PRs) |
 
