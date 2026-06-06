@@ -270,38 +270,81 @@ See [PROTECTION.md](./PROTECTION.md) for full details on why branch protection m
 | [PROTECTION.md](./PROTECTION.md) | Branch protection rules explanation |
 | [setup.py](./setup.py) | Python package configuration for wheel build |
 
-Assignment 14 — Open-Source Collaboration
-🚀 Getting Started
-Prerequisites
-
-Python 3.11 or higher
-Git
-
-Installation
-bash# 1. Fork this repository on GitHub, then clone your fork
+### Assignment 14 — Open-Source Collaboration
+ 
+## 🚀 Getting Started
+ 
+### Prerequisites
+- Python 3.11 or higher
+- Git
+### Installation
+```bash
+# 1. Fork this repository on GitHub, then clone your fork
 git clone https://github.com/YOUR_USERNAME/campusfind1.git
 cd campusfind1
-
+ 
 # 2. Install dependencies
 pip install -r requirements.txt
-
+ 
 # 3. Run all tests to verify setup
 python -m pytest tests/ -v
-
+ 
 # 4. Start the API
 uvicorn api.main:app --reload
-
+ 
 # 5. Open Swagger UI in browser
 # http://localhost:8000/docs
-
-🤝 Contributing
-We welcome contributions! Please read CONTRIBUTING.md before starting.
-Features Available for Contribution
-FeatureDifficultyLabelAdd JWT token blacklisting with RedisEasygood-first-issueAdd environment variable config with python-dotenvEasygood-first-issueAdd pagination to list endpointsEasygood-first-issueAdd structured loggingEasygood-first-issueConnect real SendGrid email APIEasygood-first-issueAdd CSV export endpoint for statisticsEasygood-first-issueImplement PostgreSQL repository layerMediumfeature-requestBuild React frontend for studentsHardfeature-requestIntegrate sentence-transformers AI matchingHardfeature-request
-See ROADMAP.md for the full list of planned features.
-
-📄 License
-This project is licensed under the MIT License — see LICENSE for details.
-📊 Peer Review
-See VOTING_RESULTS.md for peer engagement statistics.
-FileDescriptionCONTRIBUTING.mdHow to set up, code standards, and submit PRsROADMAP.mdPlanned features grouped by priority and difficultyLICENSEMIT LicenseVOTING_RESULTS.mdPeer review stars and forks trackingREFLECTION_A14.mdReflection on open-source collaboration
+```
+ 
+---
+ 
+## 🤝 Contributing
+ 
+We welcome contributions! Please read [CONTRIBUTING.md](./CONTRIBUTING.md) before starting.
+ 
+### Features Available for Contribution
+ 
+| Feature | Difficulty | Label |
+|---|---|---|
+| Add JWT token blacklisting with Redis | Easy | `good-first-issue` |
+| Add environment variable config with python-dotenv | Easy | `good-first-issue` |
+| Add pagination to list endpoints | Easy | `good-first-issue` |
+| Add structured logging | Easy | `good-first-issue` |
+| Connect real SendGrid email API | Easy | `good-first-issue` |
+| Add CSV export endpoint for statistics | Easy | `good-first-issue` |
+| Implement PostgreSQL repository layer | Medium | `feature-request` |
+| Build React frontend for students | Hard | `feature-request` |
+| Integrate sentence-transformers AI matching | Hard | `feature-request` |
+ 
+See [ROADMAP.md](./ROADMAP.md) for the full list of planned features.
+ 
+---
+ 
+## 📄 License
+This project is licensed under the MIT License — see [LICENSE](./LICENSE) for details.
+ 
+## 📊 Peer Review
+See [VOTING_RESULTS.md](./VOTING_RESULTS.md) for peer engagement statistics.
+ 
+| File | Description |
+|---|---|
+| [CONTRIBUTING.md](./CONTRIBUTING.md) | How to set up, code standards, and submit PRs |
+| [ROADMAP.md](./ROADMAP.md) | Planned features grouped by priority and difficulty |
+| [LICENSE](./LICENSE) | MIT License |
+| [VOTING_RESULTS.md](./VOTING_RESULTS.md) | Peer review stars and forks tracking |
+| [REFLECTION_A14.md](./REFLECTION_A14.md) | Reflection on open-source collaboration |
+ 
+---
+ 
+### Assignment 15 — Cross-Project Contributions
+ 
+## 🤝 My Contributions to Peers
+ 
+See [CONTRIBUTIONS.md](./CONTRIBUTIONS.md) for the full details of all pull requests submitted to classmates' repositories.
+ 
+| File | Description |
+|---|---|
+| [CONTRIBUTIONS.md](./CONTRIBUTIONS.md) | Assignment 15 submission — all PR links and workflow |
+| [CONTRIBUTION_PLAN.md](./CONTRIBUTION_PLAN.md) | Strategy for contributing to 3+ classmate projects |
+| [MERGED_PRS.md](./MERGED_PRS.md) | Links to all submitted and merged PRs |
+| [REFLECTION_A15.md](./REFLECTION_A15.md) | Reflection on cross-project collaboration |

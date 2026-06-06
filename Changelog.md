@@ -139,3 +139,16 @@ Label these issues on GitHub after pushing:
 - Build React frontend for students
 - Integrate sentence-transformers AI matching engine
  
+ ## [Assignment 15] — 2026
+ 
+### Added
+- `CONTRIBUTION_PLAN.md` — Strategy for contributing to 3+ classmate projects
+- `MERGED_PRS.md` — Tracking file for all submitted and merged PRs
+- `CONTRIBUTIONS.md` — Main submission file with PR links and workflow
+- `REFLECTION_A15.md` — Reflection on cross-project collaboration challenges
+- Updated `README.md` with Assignment 15 section
+### GitHub Activity
+- Forked 3+ classmate repositories
+- Submitted 3+ pull requests to classmates' projects
+- Responded to PR review feedback
+- Updated MERGED_PRS.md as PRs were accepted
