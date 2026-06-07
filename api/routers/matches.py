@@ -4,7 +4,7 @@ matches.py — Match Record API Router
 RESTful endpoints for AI match record management.
 Base path: /api/matches
 """
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from api.schemas import (
     CreateMatchRequest, ConfirmMatchRequest, DismissMatchRequest,
     MatchResponse, MessageResponse, ErrorResponse,
@@ -59,8 +59,15 @@ def create_match(
     response_model=list[MatchResponse],
     summary="Get all match records",
 )
-def get_all(svc: MatchService = Depends(get_match_service)):
-    return [_to_response(m) for m in svc.get_all()]
+def get_all(
+    page: int = Query(1, ge=1, description="Page number starting from 1"),
+    limit: int = Query(10, ge=1, le=100, description="Number of records per page"),
+    svc: MatchService = Depends(get_match_service),
+):
+    matches = svc.get_all()
+    start = (page - 1) * limit
+    end = start + limit
+    return [_to_response(m) for m in matches[start:end]]
 
 
 @router.get(
@@ -69,8 +76,15 @@ def get_all(svc: MatchService = Depends(get_match_service)):
     summary="Get all pending matches for admin review",
     description="Returns NOTIFIED and PENDING_REVIEW matches sorted by confidence score (highest first).",
 )
-def get_pending(svc: MatchService = Depends(get_match_service)):
-    return [_to_response(m) for m in svc.get_pending_for_admin()]
+def get_pending(
+    page: int = Query(1, ge=1, description="Page number starting from 1"),
+    limit: int = Query(10, ge=1, le=100, description="Number of records per page"),
+    svc: MatchService = Depends(get_match_service),
+):
+    matches = svc.get_pending_for_admin()
+    start = (page - 1) * limit
+    end = start + limit
+    return [_to_response(m) for m in matches[start:end]]
 
 
 @router.get(

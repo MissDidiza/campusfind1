@@ -6,7 +6,7 @@ All endpoints documented for OpenAPI/Swagger auto-generation.
 
 Base path: /api/users
 """
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from api.schemas import (
     RegisterRequest, LoginRequest, UpdateProfileRequest,
     UpdateRoleRequest, UserResponse, MessageResponse, ErrorResponse,
@@ -108,8 +108,15 @@ def login(
     summary="Get all users (admin only)",
     description="Returns all registered users. Intended for admin use only.",
 )
-def get_all_users(svc: UserService = Depends(get_user_service)):
-    return [_to_response(u) for u in svc.get_all()]
+def get_all_users(
+    page: int = Query(1, ge=1, description="Page number starting from 1"),
+    limit: int = Query(10, ge=1, le=100, description="Number of records per page"),
+    svc: UserService = Depends(get_user_service),
+):
+    users = svc.get_all()
+    start = (page - 1) * limit
+    end = start + limit
+    return [_to_response(u) for u in users[start:end]]
 
 
 @router.get(
