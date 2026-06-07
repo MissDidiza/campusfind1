@@ -10,7 +10,7 @@ This document tracks all pull requests I submitted to classmates' repositories a
 | PR # | Repository | Title | Status | Link |
 |---|---|---|---|---|
 | 1 | PRASA-System | Feature: Add modulo operation to calculator | Pending ⏳ | https://github.com/Makunga0471/PRASA-System/pull/1 |
-| 2 | (classmate repo) | (PR title) | Merged ✅ / Pending ⏳ | (GitHub PR URL) |
+ 2 | Teboho66/SentinelPay | Fix: remove duplicate Requirements stats table from README | https://github.com/Teboho66/SentinelPay/pull/42 |
 | 3 | (classmate repo) | (PR title) | Merged ✅ / Pending ⏳ | (GitHub PR URL) |
 
 ---
