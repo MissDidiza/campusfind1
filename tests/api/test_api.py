@@ -126,6 +126,22 @@ class TestUserAPI:
         assert "deactivated" in res.json()["message"]
 
 
+
+    def test_get_users_supports_pagination(self):
+        register_and_verify("pageuser1@university.ac.za", "Page User 1")
+        register_and_verify("pageuser2@university.ac.za", "Page User 2")
+        register_and_verify("pageuser3@university.ac.za", "Page User 3")
+
+        res = client.get("/api/users/?page=1&limit=2")
+
+        assert res.status_code == 200
+        assert len(res.json()) == 2
+
+    def test_pagination_rejects_invalid_page_value(self):
+        res = client.get("/api/users/?page=0&limit=10")
+
+        assert res.status_code == 422
+
 # ── Report API Tests ──────────────────────────────────────────────
 
 class TestReportAPI:
@@ -201,6 +217,18 @@ class TestReportAPI:
         res = client.delete(f"/api/reports/{report_id}?user_id={user_id}")
         assert res.status_code == 200
 
+
+
+    def test_get_reports_supports_pagination(self):
+        user_id = register_and_verify("pagereports@university.ac.za")
+        create_report(user_id, "LOST")
+        create_report(user_id, "FOUND")
+        create_report(user_id, "LOST")
+
+        res = client.get("/api/reports/?page=1&limit=2")
+
+        assert res.status_code == 200
+        assert len(res.json()) == 2
 
 # ── Match API Tests ───────────────────────────────────────────────
 

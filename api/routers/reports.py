@@ -4,7 +4,7 @@ reports.py — Report API Router
 RESTful endpoints for lost and found report management.
 Base path: /api/reports
 """
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from datetime import date
 from api.schemas import (
     CreateReportRequest, UpdateReportRequest,
@@ -62,8 +62,15 @@ def create_report(
     summary="Get all reports",
     description="Returns all reports in the system. Admin use.",
 )
-def get_all_reports(svc: ReportService = Depends(get_report_service)):
-    return [_to_response(r) for r in svc.get_all()]
+def get_all_reports(
+    page: int = Query(1, ge=1, description="Page number starting from 1"),
+    limit: int = Query(10, ge=1, le=100, description="Number of records per page"),
+    svc: ReportService = Depends(get_report_service),
+):
+    reports = svc.get_all()
+    start = (page - 1) * limit
+    end = start + limit
+    return [_to_response(r) for r in reports[start:end]]
 
 
 @router.get(
@@ -72,8 +79,15 @@ def get_all_reports(svc: ReportService = Depends(get_report_service)):
     summary="Get all open lost reports",
     description="Returns all lost reports with status OPEN. Used by the AI matching engine.",
 )
-def get_open_lost(svc: ReportService = Depends(get_report_service)):
-    return [_to_response(r) for r in svc.get_open_lost_reports()]
+def get_open_lost(
+    page: int = Query(1, ge=1, description="Page number starting from 1"),
+    limit: int = Query(10, ge=1, le=100, description="Number of records per page"),
+    svc: ReportService = Depends(get_report_service),
+):
+    reports = svc.get_open_lost_reports()
+    start = (page - 1) * limit
+    end = start + limit
+    return [_to_response(r) for r in reports[start:end]]
 
 
 @router.get(
@@ -81,8 +95,15 @@ def get_open_lost(svc: ReportService = Depends(get_report_service)):
     response_model=list[ReportResponse],
     summary="Get all open found reports",
 )
-def get_open_found(svc: ReportService = Depends(get_report_service)):
-    return [_to_response(r) for r in svc.get_open_found_reports()]
+def get_open_found(
+    page: int = Query(1, ge=1, description="Page number starting from 1"),
+    limit: int = Query(10, ge=1, le=100, description="Number of records per page"),
+    svc: ReportService = Depends(get_report_service),
+):
+    reports = svc.get_open_found_reports()
+    start = (page - 1) * limit
+    end = start + limit
+    return [_to_response(r) for r in reports[start:end]]
 
 
 @router.get(
@@ -91,8 +112,16 @@ def get_open_found(svc: ReportService = Depends(get_report_service)):
     summary="Get all reports by a specific user",
     responses={200: {"description": "Reports found"}},
 )
-def get_by_user(user_id: str, svc: ReportService = Depends(get_report_service)):
-    return [_to_response(r) for r in svc.get_by_user(user_id)]
+def get_by_user(
+    user_id: str,
+    page: int = Query(1, ge=1, description="Page number starting from 1"),
+    limit: int = Query(10, ge=1, le=100, description="Number of records per page"),
+    svc: ReportService = Depends(get_report_service),
+):
+    reports = svc.get_by_user(user_id)
+    start = (page - 1) * limit
+    end = start + limit
+    return [_to_response(r) for r in reports[start:end]]
 
 
 @router.get(
