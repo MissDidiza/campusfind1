@@ -4,8 +4,11 @@ reports.py — Report API Router
 RESTful endpoints for lost and found report management.
 Base path: /api/reports
 """
-from fastapi import APIRouter, Depends, HTTPException, status
+import csv
+from io import StringIO
+from fastapi import APIRouter, Depends, HTTPException, status, Response
 from datetime import date
+from typing import Optional
 from api.schemas import (
     CreateReportRequest, UpdateReportRequest,
     ReportResponse, MessageResponse, ErrorResponse,
@@ -173,6 +176,93 @@ def delete_report(
         raise HTTPException(status_code=403, detail=str(e))
     except ReportNotEditableException as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+
+@router.get(
+    "/export/csv",
+    response_class=Response,
+    summary="Export reports as CSV",
+    description=(
+        "Exports reports in CSV format with optional filtering. "
+        "Query parameters: user_id (filter by user), status (filter by status), "
+        "report_type (filter by LOST or FOUND). CSV file is returned for download."
+    ),
+    responses={
+        200: {
+            "content": {"text/csv": {}},
+            "description": "CSV file containing reports",
+        },
+    },
+)
+def export_reports_csv(
+    user_id: Optional[str] = None,
+    status: Optional[str] = None,
+    report_type: Optional[str] = None,
+    svc: ReportService = Depends(get_report_service),
+):
+    """
+    Export reports as CSV file with optional filtering.
+    
+    Query parameters:
+    - user_id: Filter by specific user
+    - status: Filter by report status (e.g., OPEN, MATCHED)
+    - report_type: Filter by report type (LOST or FOUND)
+    """
+    try:
+        # Get all reports first
+        reports = svc.get_all()
+        
+        # Apply filters
+        if user_id:
+            reports = [r for r in reports if r.user_id == user_id]
+        if status:
+            reports = [r for r in reports if r.status.value == status.upper()]
+        if report_type:
+            reports = [r for r in reports if r.report_type.value == report_type.upper()]
+        
+        # Create CSV content
+        output = StringIO()
+        writer = csv.writer(output)
+        
+        # Write header
+        writer.writerow([
+            "Report ID",
+            "User ID",
+            "Report Type",
+            "Item Name",
+            "Category",
+            "Description",
+            "Location",
+            "Status",
+            "Created At",
+        ])
+        
+        # Write data rows
+        for report in reports:
+            writer.writerow([
+                report.report_id,
+                report.user_id,
+                report.report_type.value,
+                report.item_name,
+                report.category.value,
+                report.description,
+                report.location,
+                report.status.value,
+                report.created_at.isoformat(),
+            ])
+        
+        csv_content = output.getvalue()
+        
+        return Response(
+            content=csv_content,
+            media_type="text/csv",
+            headers={"Content-Disposition": "attachment; filename=reports.csv"},
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error exporting CSV: {str(e)}"
+        )
 
 
 def _to_response(report) -> dict:
