@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusFind | University Lost & Found</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+    <a href="#" class="logo">Campus<span>Find.</span></a>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#items">Browse Items</a>
+        <a href="#report">Report Item</a>
+    </nav>
+    <a href="#report" class="nav-btn">Report an Item +</a>
+</header>
+
+<section class="hero" id="home">
+    <div class="hero-content">
+        <span class="tag">YOUR CAMPUS, CONNECTED</span>
+        <h1>Lost something?<br><span>Let's find it.</span></h1>
+        <p>A dedicated platform to reunite students with their
+        lost belongings. Report, discover and reconnect.</p>
+        <div class="hero-buttons">
+            <a href="#items" class="primary-btn">Find an Item</a>
+            <a href="#report" class="secondary-btn">Report Lost / Found</a>
+        </div>
+    </div>
+    <div class="hero-visual">
+        <div class="visual-circle">🔎</div>
+        <div class="floating-card">🎒 &nbsp; Lost Backpack</div>
+        <div class="floating-card second">📱 &nbsp; Found Phone</div>
+    </div>
+</section>
+
+<section class="stats">
+    <div><h2 id="totalCount">0</h2><p>Total Reports</p></div>
+    <div><h2 id="lostCount">0</h2><p>Lost Items</p></div>
+    <div><h2 id="foundCount">0</h2><p>Found Items</p></div>
+    <div><h2 id="returnedCount">0</h2><p>Successfully Returned</p></div>
+</section>
+
+<section class="items-section" id="items">
+    <div class="section-heading">
+        <div>
+            <span class="tag">CAMPUS INVENTORY</span>
+            <h2>Explore Reported Items</h2>
+            <p>Search for your missing belongings or help someone find theirs.</p>
+        </div>
+    </div>
+
+    <div class="filters">
+        <input type="text" id="searchInput"
+            placeholder="Search item name or location...">
+
+        <select id="categoryFilter">
+            <option value="all">All Categories</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Bags">Bags</option>
+            <option value="Documents">Documents</option>
+            <option value="Accessories">Accessories</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <select id="statusFilter">
+            <option value="all">All Status</option>
+            <option value="Lost">Lost</option>
+            <option value="Found">Found</option>
+            <option value="Returned">Returned</option>
+        </select>
+    </div>
+
+    <div id="itemsContainer" class="items-grid"></div>
+    <p id="emptyMessage" class="empty-message" hidden>
+        No matching items found. Try another search.
+    </p>
+</section>
+
+<section class="report-section" id="report">
+    <div class="report-intro">
+        <span class="tag">MAKE A DIFFERENCE</span>
+        <h2>Report an Item</h2>
+        <p>Every report brings someone closer to finding
+        what they have lost.</p>
+        <div class="report-note">
+            💡 Please provide accurate details so that
+            the rightful owner can identify their belongings.
+        </div>
+    </div>
+
+    <form id="reportForm" class="report-form">
+        <h3>Submit a New Report</h3>
+
+        <label>Report Type</label>
+        <select id="itemStatus" required>
+            <option value="">Select Report Type</option>
+            <option value="Lost">I Lost Something</option>
+            <option value="Found">I Found Something</option>
+        </select>
+
+        <label>Item Name</label>
+        <input type="text" id="itemName"
+            placeholder="e.g. Black Wallet" required>
+
+        <label>Category</label>
+        <select id="itemCategory" required>
+            <option value="">Select Category</option>
+            <option>Electronics</option>
+            <option>Bags</option>
+            <option>Documents</option>
+            <option>Accessories</option>
+            <option>Other</option>
+        </select>
+
+        <label>Location</label>
+        <input type="text" id="itemLocation"
+            placeholder="e.g. University Library" required>
+
+        <label>Date</label>
+        <input type="date" id="itemDate" required>
+
+        <label>Description</label>
+        <textarea id="itemDescription"
+            placeholder="Describe the item, its color, brand, etc."
+            required></textarea>
+
+        <label>Image URL (Optional)</label>
+        <input type="url" id="itemImage"
+            placeholder="https://example.com/image.jpg">
+
+        <label>Your Name</label>
+        <input type="text" id="reporterName"
+            placeholder="Enter your name" required>
+
+        <label>Contact Email</label>
+        <input type="email" id="reporterEmail"
+            placeholder="yourname@example.com" required>
+
+        <button type="submit" class="primary-btn submit-btn">
+            Submit Report →
+        </button>
+
+        <p id="formMessage" class="form-message"></p>
+    </form>
+</section>
+
+<footer>
+    <a href="#" class="logo">Campus<span>Find.</span></a>
+    <p>Connecting people. Reuniting belongings.</p>
+    <p>© 2026 CampusFind | University Lost & Found Portal</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
